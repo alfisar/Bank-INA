@@ -3,7 +3,7 @@ CREATE TABLE tasks (
     user_id INT NOT NULL,
     title VARCHAR(255),
     description TEXT,
-    status VARCHAR(255),
+    status VARCHAR(50) DEFAULT 'pending',
     created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
     updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
