@@ -9,3 +9,11 @@ func FailedFromRepo(err error) domain.ErrorData {
 		Data:         err,
 	}
 }
+
+func FailedFromService(RC string, err error) domain.ErrorData {
+	return domain.ErrorData{
+		ResponseCode: RC,
+		Message:      domain.FailedServ,
+		Data:         err,
+	}
+}

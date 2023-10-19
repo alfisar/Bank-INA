@@ -3,6 +3,9 @@ package domain
 const (
 	FailedRepoCode string = "1301"
 	FailedRepo     string = "terjadi kesalahan - BINA - 1301"
+
+	FailedServCode string = "1201"
+	FailedServ     string = "terjadi kesalahan - BINA - 1201"
 )
 
 type ErrorData struct {
