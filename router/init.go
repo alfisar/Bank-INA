@@ -2,6 +2,15 @@ package router
 
 import (
 	_welcomeController "Bank-INA/application/welcome/controller"
+
+	_userController "Bank-INA/application/user/controller"
+	_userMysql "Bank-INA/application/user/repository/mysql"
+	_userService "Bank-INA/application/user/service"
+
+	_tasksController "Bank-INA/application/tasks/controller"
+	_tasksMysql "Bank-INA/application/tasks/repository/mysql"
+	_tasksService "Bank-INA/application/tasks/service"
+
 	"Bank-INA/database"
 
 	"github.com/joho/godotenv"
@@ -14,4 +23,18 @@ var (
 
 func welcomeRouterInit() *_welcomeController.ControllerWelcome {
 	return _welcomeController.NewWelcomeController()
+}
+
+func userRouterInit() *_userController.UserController {
+	repo := _userMysql.NewUserRepository(db)
+	serv := _userService.NewUserService(repo)
+	controll := _userController.NewUserController(serv)
+	return controll
+}
+
+func tasksRouterInit() *_tasksController.TasksController {
+	repo := _tasksMysql.NewTaskRepository(db)
+	serv := _tasksService.NewTasksService(repo)
+	controll := _tasksController.NewTasksController(serv)
+	return controll
 }

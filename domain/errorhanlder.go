@@ -1,11 +1,17 @@
 package domain
 
 const (
-	FailedRepoCode string = "1301"
-	FailedRepo     string = "terjadi kesalahan - BINA - 1301"
+	FailedControllCode           string = "1101"
+	FailedValidationControllCode string = "1102"
+	FailedServCode               string = "1201"
+	FailedHashingPassCode        string = "1202"
+	FailedRepoCode               string = "1301"
 
-	FailedServCode string = "1201"
-	FailedServ     string = "terjadi kesalahan - BINA - 1201"
+	FailedControll           string = "terjadi kesalahan - BINA - 1101"
+	FailedValidationControll string = "terjadi kesalahan - BINA - 1102"
+	FailedServ               string = "terjadi kesalahan - BINA - 1201"
+	FailedHashingPass        string = "terjadi kesalahan - BINA - 1202"
+	FailedRepo               string = "terjadi kesalahan - BINA - 1301"
 )
 
 type ErrorData struct {

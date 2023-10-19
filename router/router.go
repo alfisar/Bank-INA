@@ -7,6 +7,7 @@ func NewRoute() *gin.Engine {
 
 	v1 := api.Group("/api/v1")
 	welcomeRouter(v1)
-
+	userRouter(v1)
+	taskRouter(v1)
 	return api
 }

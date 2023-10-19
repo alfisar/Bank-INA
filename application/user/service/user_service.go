@@ -4,6 +4,7 @@ import (
 	repo "Bank-INA/application/user/repository/mysql"
 	"Bank-INA/domain"
 	"Bank-INA/internal/errorhandler"
+	"Bank-INA/internal/hashing"
 	"fmt"
 )
 
@@ -18,6 +19,10 @@ func NewUserService(repo repo.UserRepositoryContract) *UserService {
 }
 
 func (obj *UserService) Create(data domain.User) (err domain.ErrorData) {
+	data.Password, err = hashing.GeneratePass(data.Password)
+	if err.ResponseCode != "" {
+		return
+	}
 	return obj.repo.CreateUser(data)
 }
 

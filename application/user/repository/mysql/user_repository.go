@@ -28,7 +28,7 @@ func (obj *UserRepository) CreateUser(data domain.User) (err domain.ErrorData) {
 }
 
 func (obj *UserRepository) GetAll() (result []domain.User, err domain.ErrorData) {
-	errData := obj.conn.Table("users").Find(&result).Error
+	errData := obj.conn.Table("users").Select("id, name, email").Find(&result).Error
 
 	if errData != nil {
 		err = errorhandler.FailedFromRepo(errData)
@@ -38,10 +38,10 @@ func (obj *UserRepository) GetAll() (result []domain.User, err domain.ErrorData)
 }
 
 func (obj *UserRepository) GetByID(id int) (result domain.User, err domain.ErrorData) {
-	errData := obj.conn.Table("users").Where("id = ?", id).First(&result).Error
+	errData := obj.conn.Table("users").Select("id, name, email").Where("id = ?", id).First(&result).Error
 
 	if errData != nil {
-		err = errorhandler.FailedFromRepo(errData)
+		err = errorhandler.FailedFirstFromRepo(errData)
 	}
 
 	return
