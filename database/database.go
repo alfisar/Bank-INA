@@ -13,7 +13,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func NewConnMysql() *gorm.DB {
+func NewConnMysql(testing int) *gorm.DB {
 	fmt.Println("Starting database MySql ....")
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
@@ -34,25 +34,27 @@ func NewConnMysql() *gorm.DB {
 
 	fmt.Println("Successfully connect to DB :) ")
 
-	dir, _ := os.Getwd()
-	migrationsPath := dir + "/database/migrations"
+	if testing == 0 {
+		dir, _ := os.Getwd()
+		migrationsPath := dir + "/database/migrations"
 
-	sqlDB, _ := conn.DB()
-	driver, err := migrateSql.WithInstance(sqlDB, &migrateSql.Config{})
-	if err != nil {
-		log.Fatalf("Error creating MySQL driver instance: %v", err)
-	}
+		sqlDB, _ := conn.DB()
+		driver, err := migrateSql.WithInstance(sqlDB, &migrateSql.Config{})
+		if err != nil {
+			log.Fatalf("Error creating MySQL driver instance: %v", err)
+		}
 
-	// Create a new migration instance
-	m, err := migrate.NewWithDatabaseInstance("file://"+migrationsPath, "mysql", driver)
-	if err != nil {
-		log.Fatalf("Error creating migration instance: %v", err)
-	}
+		// Create a new migration instance
+		m, err := migrate.NewWithDatabaseInstance("file://"+migrationsPath, "mysql", driver)
+		if err != nil {
+			log.Fatalf("Error creating migration instance: %v", err)
+		}
 
-	// Run the migration to the latest version
-	err = m.Up()
-	if err != nil && err != migrate.ErrNoChange {
-		log.Fatalf("Error applying migration: %v", err)
+		// Run the migration to the latest version
+		err = m.Up()
+		if err != nil && err != migrate.ErrNoChange {
+			log.Fatalf("Error applying migration: %v", err)
+		}
 	}
 
 	return conn

@@ -9,7 +9,7 @@ import (
 
 var (
 	_  = godotenv.Load(".env")
-	db = database.NewConnMysql()
+	db = database.NewConnMysql(0)
 )
 
 func welcomeRouterInit() *_welcomeController.ControllerWelcome {
