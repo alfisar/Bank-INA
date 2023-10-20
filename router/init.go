@@ -2,6 +2,7 @@ package router
 
 import (
 	_welcomeController "Bank-INA/application/welcome/controller"
+	"os"
 
 	_userController "Bank-INA/application/user/controller"
 	_userMysql "Bank-INA/application/user/repository/mysql"
@@ -10,6 +11,9 @@ import (
 	_tasksController "Bank-INA/application/tasks/controller"
 	_tasksMysql "Bank-INA/application/tasks/repository/mysql"
 	_tasksService "Bank-INA/application/tasks/service"
+
+	"Bank-INA/internal/middleware"
+	oauthhandler "Bank-INA/internal/oauthHandler"
 
 	"Bank-INA/database"
 
@@ -37,4 +41,13 @@ func tasksRouterInit() *_tasksController.TasksController {
 	serv := _tasksService.NewTasksService(repo)
 	controll := _tasksController.NewTasksController(serv)
 	return controll
+}
+
+func setMiddleware() *middleware.AuthenticateMiddleware {
+	oauth := oauthhandler.GetOAuthHandler()
+	oauth.ClientID = os.Getenv("OAUTH_CLIENT_ID")
+	oauth.ClientSecret = os.Getenv("OAUTH_CLIENT_SECRET")
+	oauth.TokenUrl = os.Getenv("OAUTH_TOKEN_URL")
+	middleWR := middleware.NewAuthenticateMiddleware(oauth)
+	return middleWR
 }

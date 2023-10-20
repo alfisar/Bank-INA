@@ -23,6 +23,11 @@ func Failed(ctx *gin.Context, data domain.ErrorData) {
 	response(ctx, 400, data)
 }
 
+func Unauth(ctx *gin.Context, data domain.ErrorData) {
+
+	response(ctx, 401, data)
+}
+
 func Success(ctx *gin.Context, data interface{}) {
 	dataRes := domain.Response{
 		ResponseCode: "0000",

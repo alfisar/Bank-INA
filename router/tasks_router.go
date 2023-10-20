@@ -4,9 +4,9 @@ import "github.com/gin-gonic/gin"
 
 func taskRouter(api *gin.RouterGroup) {
 	taskControll := tasksRouterInit()
-	api.POST("/tasks", taskControll.Create)
-	api.GET("/tasks", taskControll.Get)
-	api.GET("/tasks/:id", taskControll.GetByID)
-	api.PUT("/tasks/:id", taskControll.Update)
-	api.DELETE("/tasks/:id", taskControll.Delete)
+	api.POST("/tasks", setMiddleware().Authenticate(), taskControll.Create)
+	api.GET("/tasks", setMiddleware().Authenticate(), taskControll.Get)
+	api.GET("/tasks/:id", setMiddleware().Authenticate(), taskControll.GetByID)
+	api.PUT("/tasks/:id", setMiddleware().Authenticate(), taskControll.Update)
+	api.DELETE("/tasks/:id", setMiddleware().Authenticate(), taskControll.Delete)
 }
