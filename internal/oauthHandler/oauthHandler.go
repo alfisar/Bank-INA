@@ -39,6 +39,5 @@ func (obj *OAuthHandler) ValidateToken(token string) (err domain.ErrorData) {
 		return
 	}
 	return
-	// defer resp.Body.Close()
 
 }
